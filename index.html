@@ -1,0 +1,1557 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>PINE Digital Systems — AI, Automation & Web Solutions</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="description" content="PINE Digital Systems helps businesses automate workflows, build AI assistants and launch high-converting websites and stores." />
+  <style>
+    :root {
+      --bg: #050810;
+      --bg-elevated: #0d111c;
+      --bg-soft: #111827;
+      --accent: #22c55e;      /* pine green */
+      --accent-soft: rgba(34, 197, 94, 0.1);
+      --accent-strong: #16a34a;
+      --text: #e5e7eb;
+      --muted: #9ca3af;
+      --border: #1f2933;
+      --danger: #ef4444;
+      --radius-lg: 18px;
+      --radius-xl: 26px;
+      --shadow-soft: 0 18px 40px rgba(0,0,0,0.45);
+      --max-width: 1100px;
+    }
+
+    *, *::before, *::after {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, "SF Pro Text", sans-serif;
+      background: radial-gradient(circle at top, #0b1220 0, #020617 45%, #000 100%);
+      color: var(--text);
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none;
+    }
+
+    img {
+      max-width: 100%;
+      display: block;
+    }
+
+    .page {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .shell {
+      width: 100%;
+      max-width: var(--max-width);
+      margin: 0 auto;
+      padding: 0 1.25rem;
+    }
+
+    /* HEADER */
+
+    header {
+      position: sticky;
+      top: 0;
+      z-index: 40;
+      backdrop-filter: blur(22px);
+      background: linear-gradient(to bottom, rgba(2,6,23,0.95), rgba(2,6,23,0.7), transparent);
+      border-bottom: 1px solid rgba(15,23,42,0.9);
+    }
+
+    .nav-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 0.9rem 0;
+      gap: 1.5rem;
+    }
+
+    .logo-box {
+      display: flex;
+      align-items: center;
+      gap: 0.7rem;
+    }
+
+    .logo-mark {
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      background: radial-gradient(circle at 30% 0%, #bbf7d0, #22c55e 45%, #052e16 100%);
+      position: relative;
+      box-shadow: 0 0 0 1px rgba(34,197,94,0.25), 0 12px 26px rgba(0,0,0,0.65);
+      overflow: hidden;
+    }
+
+    .logo-mark::before {
+      content: "";
+      position: absolute;
+      inset: 30% 25%;
+      border-radius: 999px;
+      border: 2px solid rgba(15,23,42,0.9);
+      border-left-color: transparent;
+      border-bottom-color: transparent;
+      transform: rotate(-25deg);
+    }
+
+    .logo-text-main {
+      font-weight: 700;
+      letter-spacing: 0.11em;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+
+    .logo-text-sub {
+      font-size: 0.72rem;
+      color: var(--muted);
+    }
+
+    nav {
+      display: flex;
+      align-items: center;
+      gap: 1.5rem;
+      font-size: 0.9rem;
+    }
+
+    .nav-links {
+      display: flex;
+      align-items: center;
+      gap: 1.3rem;
+    }
+
+    .nav-link {
+      position: relative;
+      color: var(--muted);
+      padding-bottom: 2px;
+    }
+
+    .nav-link::after {
+      content: "";
+      position: absolute;
+      left: 0;
+      bottom: 0;
+      height: 1px;
+      width: 0;
+      background: linear-gradient(to right, var(--accent), transparent);
+      transition: width 0.2s ease-out;
+    }
+
+    .nav-link:hover {
+      color: var(--text);
+    }
+
+    .nav-link:hover::after {
+      width: 100%;
+    }
+
+    .nav-cta {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.45rem 0.9rem;
+      border-radius: 999px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+      color: #011106;
+      font-weight: 600;
+      font-size: 0.85rem;
+      border: 1px solid rgba(34,197,94,0.8);
+      box-shadow: 0 14px 32px rgba(34,197,94,0.35);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+
+    .nav-cta span {
+      font-size: 1.1rem;
+      transform: translateY(1px);
+    }
+
+    /* Mobile nav */
+
+    .nav-toggle {
+      display: none;
+      width: 32px;
+      height: 32px;
+      border-radius: 999px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.9);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    }
+
+    .nav-toggle-lines {
+      width: 16px;
+      height: 11px;
+      position: relative;
+    }
+
+    .nav-toggle-lines span {
+      position: absolute;
+      left: 0;
+      right: 0;
+      height: 2px;
+      border-radius: 999px;
+      background: #e5e7eb;
+      transition: transform 0.2s ease, opacity 0.2s ease, top 0.2s ease, bottom 0.2s ease;
+    }
+
+    .nav-toggle-lines span:nth-child(1) { top: 0; }
+    .nav-toggle-lines span:nth-child(2) { top: 4.5px; }
+    .nav-toggle-lines span:nth-child(3) { bottom: 0; }
+
+    .nav-toggle.is-open .nav-toggle-lines span:nth-child(1) {
+      top: 4.5px;
+      transform: rotate(45deg);
+    }
+
+    .nav-toggle.is-open .nav-toggle-lines span:nth-child(2) {
+      opacity: 0;
+    }
+
+    .nav-toggle.is-open .nav-toggle-lines span:nth-child(3) {
+      bottom: 4.5px;
+      transform: rotate(-45deg);
+    }
+
+    .nav-desktop {
+      display: flex;
+      align-items: center;
+      gap: 1.2rem;
+    }
+
+    .nav-mobile {
+      display: none;
+      flex-direction: column;
+      gap: 0.5rem;
+      padding-bottom: 0.8rem;
+    }
+
+    .nav-mobile a {
+      padding: 0.4rem 0;
+      color: var(--muted);
+    }
+
+    .nav-mobile a:hover {
+      color: var(--text);
+    }
+
+    /* HERO */
+
+    main {
+      flex: 1;
+    }
+
+    .hero {
+      padding: 2.5rem 0 2rem;
+    }
+
+    .hero-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3.5fr) minmax(0, 3fr);
+      gap: 2.5rem;
+      align-items: center;
+    }
+
+    .hero-label {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      padding: 0.15rem 0.4rem 0.15rem 0.2rem;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(55,65,81,0.8);
+      margin-bottom: 1rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .hero-label-pill {
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      background: var(--accent-soft);
+      color: #a7f3d0;
+      font-size: 0.7rem;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+      border: 1px solid rgba(34,197,94,0.6);
+    }
+
+    .hero-title {
+      font-size: clamp(2.4rem, 4vw, 3rem);
+      line-height: 1.05;
+      letter-spacing: -0.04em;
+      margin: 0 0 0.9rem;
+    }
+
+    .hero-title span {
+      background: linear-gradient(to right, #bbf7d0, #22c55e);
+      -webkit-background-clip: text;
+      color: transparent;
+    }
+
+    .hero-subtitle {
+      font-size: 0.98rem;
+      color: var(--muted);
+      max-width: 30rem;
+      line-height: 1.6;
+      margin-bottom: 1.3rem;
+    }
+
+    .hero-highlights {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.6rem;
+      margin-bottom: 1.8rem;
+    }
+
+    .hero-highlights span {
+      font-size: 0.78rem;
+      padding: 0.25rem 0.6rem;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(31,41,55,0.9);
+      color: var(--muted);
+    }
+
+    .hero-cta-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+      align-items: center;
+      margin-bottom: 1.4rem;
+    }
+
+    .btn-primary,
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.45rem;
+      padding: 0.65rem 1.25rem;
+      border-radius: 999px;
+      font-size: 0.9rem;
+      font-weight: 500;
+      cursor: pointer;
+      border: 1px solid transparent;
+      text-decoration: none;
+    }
+
+    .btn-primary {
+      background: radial-gradient(circle at 0% 0%, #bbf7d0, #22c55e 40%, #16a34a 100%);
+      color: #011106;
+      box-shadow: 0 16px 38px rgba(34,197,94,0.35);
+      border-color: rgba(34,197,94,0.9);
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-1px);
+      box-shadow: 0 20px 45px rgba(34,197,94,0.4);
+    }
+
+    .btn-ghost {
+      background: rgba(15,23,42,0.9);
+      border-color: rgba(55,65,81,0.9);
+      color: var(--muted);
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(107,114,128,1);
+      color: var(--text);
+      background: rgba(15,23,42,0.95);
+    }
+
+    .btn-primary span,
+    .btn-ghost span {
+      font-size: 1.1rem;
+      transform: translateY(1px);
+    }
+
+    .hero-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.1rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .hero-meta-item strong {
+      display: block;
+      color: var(--text);
+      font-size: 0.95rem;
+      margin-bottom: 0.1rem;
+    }
+
+    /* HERO VISUAL */
+
+    .hero-visual {
+      position: relative;
+    }
+
+    .hero-card {
+      position: relative;
+      border-radius: 28px;
+      background: radial-gradient(circle at 0% 0%, rgba(45,212,191,0.16), transparent 55%), #020617;
+      border: 1px solid rgba(31,41,55,0.9);
+      padding: 1.2rem 1.1rem;
+      box-shadow: var(--shadow-soft);
+      overflow: hidden;
+      isolation: isolate;
+    }
+
+    .hero-card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 1rem;
+    }
+
+    .hero-card-title {
+      font-size: 0.85rem;
+      color: var(--muted);
+    }
+
+    .hero-card-title strong {
+      display: block;
+      font-size: 1rem;
+      color: var(--text);
+    }
+
+    .hero-chip {
+      padding: 0.18rem 0.6rem;
+      border-radius: 999px;
+      border: 1px solid rgba(34,197,94,0.7);
+      background: rgba(21,128,61,0.18);
+      font-size: 0.72rem;
+      color: #bbf7d0;
+    }
+
+    .hero-metrics {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 0.65rem;
+      margin-bottom: 1.1rem;
+    }
+
+    .metric {
+      padding: 0.5rem 0.55rem;
+      border-radius: 14px;
+      background: rgba(15,23,42,0.96);
+      border: 1px solid rgba(31,41,55,0.9);
+    }
+
+    .metric-label {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-bottom: 0.12rem;
+    }
+
+    .metric-value {
+      font-size: 0.9rem;
+      font-weight: 600;
+    }
+
+    .metric-value span {
+      font-size: 0.72rem;
+      color: #4ade80;
+      margin-left: 0.1rem;
+    }
+
+    .hero-automation-row {
+      margin-bottom: 0.8rem;
+    }
+
+    .hero-automation-title {
+      font-size: 0.8rem;
+      color: var(--muted);
+      margin-bottom: 0.25rem;
+    }
+
+    .automation-flow {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+    }
+
+    .automation-step {
+      padding: 0.18rem 0.5rem;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid rgba(31,41,55,0.9);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.25rem;
+    }
+
+    .automation-step span {
+      font-size: 0.9rem;
+    }
+
+    .hero-status {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.75rem;
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+
+    .status-dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 999px;
+      background: #22c55e;
+      box-shadow: 0 0 18px rgba(34,197,94,0.7);
+      margin-right: 0.35rem;
+    }
+
+    .hero-orbit {
+      position: absolute;
+      inset: -40px;
+      pointer-events: none;
+      opacity: 0.4;
+      mix-blend-mode: screen;
+      background:
+        radial-gradient(circle at 14% -10%, rgba(52,211,153,0.85), transparent 55%),
+        radial-gradient(circle at 100% 20%, rgba(59,130,246,0.6), transparent 50%);
+      filter: blur(6px);
+    }
+
+    /* SECTION BASE */
+
+    section {
+      padding: 2.4rem 0;
+    }
+
+    .section-header {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: baseline;
+      justify-content: space-between;
+      gap: 0.9rem;
+      margin-bottom: 1.6rem;
+    }
+
+    .section-kicker {
+      font-size: 0.77rem;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+    }
+
+    .section-title {
+      font-size: 1.4rem;
+      margin: 0.25rem 0 0;
+    }
+
+    .section-title span {
+      color: #4ade80;
+    }
+
+    .section-subtitle {
+      font-size: 0.9rem;
+      color: var(--muted);
+      max-width: 26rem;
+    }
+
+    /* SERVICES */
+
+    .cards-grid-3 {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      border-radius: var(--radius-lg);
+      background: var(--bg-soft);
+      border: 1px solid var(--border);
+      padding: 1rem;
+      box-shadow: 0 10px 28px rgba(0,0,0,0.5);
+    }
+
+    .card-header-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-bottom: 0.5rem;
+    }
+
+    .card-tag {
+      font-size: 0.72rem;
+      padding: 0.15rem 0.55rem;
+      border-radius: 999px;
+      background: rgba(15,23,42,0.9);
+      border: 1px solid rgba(31,41,55,0.9);
+      color: var(--muted);
+    }
+
+    .card h3 {
+      font-size: 1rem;
+      margin: 0.15rem 0 0.25rem;
+    }
+
+    .card p {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin: 0 0 0.5rem;
+    }
+
+    .card-list {
+      list-style: none;
+      padding: 0;
+      margin: 0 0 0.7rem;
+      font-size: 0.82rem;
+      color: var(--muted);
+    }
+
+    .card-list li {
+      display: flex;
+      align-items: flex-start;
+      gap: 0.3rem;
+      margin-bottom: 0.25rem;
+    }
+
+    .card-list li::before {
+      content: "•";
+      color: #4ade80;
+      font-size: 0.9rem;
+      margin-top: 0.05rem;
+    }
+
+    .card-footnote {
+      font-size: 0.75rem;
+      color: #6ee7b7;
+    }
+
+    /* PROCESS */
+
+    .process-steps {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.9rem;
+      font-size: 0.82rem;
+    }
+
+    .step {
+      border-radius: 16px;
+      background: rgba(15,23,42,0.95);
+      border: 1px solid var(--border);
+      padding: 0.8rem 0.8rem 0.75rem;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .step-num {
+      font-size: 0.7rem;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+      color: var(--muted);
+      margin-bottom: 0.2rem;
+    }
+
+    .step h3 {
+      font-size: 0.92rem;
+      margin: 0 0 0.25rem;
+    }
+
+    .step p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    /* FEATURED PROJECT */
+
+    .project-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 3fr) minmax(0, 2.5fr);
+      gap: 1rem;
+      align-items: stretch;
+    }
+
+    .project-card {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at 0% 0%, rgba(52,211,153,0.16), transparent 60%), #020617;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .pill-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      margin-bottom: 0.7rem;
+    }
+
+    .pill {
+      font-size: 0.72rem;
+      padding: 0.18rem 0.55rem;
+      border-radius: 999px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.95);
+      color: var(--muted);
+    }
+
+    .project-metrics {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1.1rem;
+      font-size: 0.78rem;
+      margin-top: 0.6rem;
+    }
+
+    .project-metrics strong {
+      display: block;
+      font-size: 0.95rem;
+    }
+
+    .project-preview {
+      border-radius: var(--radius-lg);
+      border: 1px solid var(--border);
+      background: radial-gradient(circle at 0 0, rgba(148,163,184,0.15), transparent 55%), #020617;
+      padding: 0.7rem;
+      font-size: 0.8rem;
+      color: var(--muted);
+    }
+
+    .fake-browser {
+      border-radius: 14px;
+      background: #020617;
+      border: 1px solid rgba(31,41,55,0.9);
+      overflow: hidden;
+    }
+
+    .fake-browser-top {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      padding: 0.35rem 0.6rem;
+      border-bottom: 1px solid rgba(31,41,55,0.9);
+    }
+
+    .dot {
+      width: 7px;
+      height: 7px;
+      border-radius: 999px;
+      background: #4b5563;
+    }
+
+    .fake-browser-body {
+      padding: 0.7rem;
+    }
+
+    .fake-banner {
+      border-radius: 12px;
+      border: 1px dashed rgba(75,85,99,0.9);
+      padding: 0.55rem;
+      margin-bottom: 0.5rem;
+      font-size: 0.78rem;
+    }
+
+    .project-actions {
+      display:flex;
+      gap:0.6rem;
+      margin-top:0.7rem;
+      flex-wrap:wrap;
+    }
+
+    .project-actions a {
+      display:inline-flex;
+      align-items:center;
+      gap:0.45rem;
+      padding:0.5rem 0.9rem;
+      border-radius:999px;
+      background:rgba(15,23,42,0.95);
+      border:1px solid rgba(31,41,55,0.9);
+      color:var(--muted);
+      text-decoration:none;
+      font-size:0.88rem;
+    }
+
+    .project-actions a:hover {
+      color:var(--text);
+      border-color:rgba(107,114,128,1);
+    }
+
+    /* FAQ */
+
+    .faq-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.3fr) minmax(0, 1.9fr);
+      gap: 1.4rem;
+    }
+
+    .faq-list {
+      display: grid;
+      gap: 0.7rem;
+      font-size: 0.86rem;
+    }
+
+    .faq-item {
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      background: rgba(15,23,42,0.95);
+      padding: 0.7rem 0.8rem;
+    }
+
+    .faq-q {
+      font-weight: 500;
+      margin-bottom: 0.25rem;
+    }
+
+    .faq-a {
+      color: var(--muted);
+    }
+
+    /* CONTACT */
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1.4fr) minmax(0, 1.6fr);
+      gap: 1.4rem;
+      align-items: stretch;
+    }
+
+    .contact-card {
+      border-radius: var(--radius-xl);
+      background: radial-gradient(circle at 0% 0%, rgba(52,211,153,0.18), transparent 60%), #020617;
+      border: 1px solid var(--border);
+      padding: 1rem;
+      box-shadow: var(--shadow-soft);
+    }
+
+    .contact-note {
+      font-size: 0.86rem;
+      color: var(--muted);
+      margin-bottom: 0.9rem;
+    }
+
+    .contact-channels {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.55rem;
+      font-size: 0.82rem;
+      margin-bottom: 0.9rem;
+    }
+
+    .contact-channels a {
+      padding: 0.35rem 0.7rem;
+      border-radius: 999px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.95);
+      color: var(--muted);
+    }
+
+    .contact-channels a:hover {
+      color: var(--text);
+      border-color: rgba(107,114,128,1);
+    }
+
+    form {
+      display: grid;
+      gap: 0.7rem;
+      font-size: 0.86rem;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 0.12rem;
+    }
+
+    input, textarea, select {
+      width: 100%;
+      padding: 0.55rem 0.6rem;
+      border-radius: 12px;
+      border: 1px solid rgba(55,65,81,0.9);
+      background: rgba(15,23,42,0.95);
+      color: var(--text);
+      font-family: inherit;
+      font-size: 0.86rem;
+    }
+
+    input:focus, textarea:focus, select:focus {
+      outline: none;
+      border-color: var(--accent);
+      box-shadow: 0 0 0 1px rgba(34,197,94,0.4);
+    }
+
+    textarea {
+      min-height: 90px;
+      resize: vertical;
+    }
+
+    .input-row {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 0.7rem;
+    }
+
+    .small-help {
+      font-size: 0.74rem;
+      color: var(--muted);
+    }
+
+    .form-footnote {
+      font-size: 0.75rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    /* FOOTER */
+
+    footer {
+      border-top: 1px solid rgba(15,23,42,0.9);
+      padding: 1.1rem 0 1.3rem;
+      font-size: 0.78rem;
+      color: var(--muted);
+    }
+
+    .footer-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.8rem;
+    }
+
+    .footer-links {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.8rem;
+    }
+
+    .footer-links a {
+      color: var(--muted);
+    }
+
+    .footer-links a:hover {
+      color: var(--text);
+    }
+
+    /* RESPONSIVE */
+
+    @media (max-width: 900px) {
+      .hero-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .hero {
+        padding-top: 2rem;
+      }
+      .cards-grid-3 {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .process-steps {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+      }
+      .project-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+      .contact-grid,
+      .faq-grid {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+
+    @media (max-width: 720px) {
+      .nav-desktop {
+        display: none;
+      }
+      .nav-toggle {
+        display: flex;
+      }
+      .nav-mobile {
+        display: none;
+      }
+      .nav-mobile.is-open {
+        display: flex;
+      }
+      .hero-title {
+        font-size: 2.1rem;
+      }
+    }
+
+    @media (max-width: 520px) {
+      .hero-meta {
+        flex-direction: column;
+        align-items: flex-start;
+      }
+      .input-row {
+        grid-template-columns: minmax(0, 1fr);
+      }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- HEADER -->
+  <header>
+    <div class="shell">
+      <div class="nav-row">
+        <a href="#top" class="logo-box">
+          <div class="logo-mark"></div>
+          <div>
+            <div class="logo-text-main">PINE</div>
+            <div class="logo-text-sub">Digital Systems</div>
+          </div>
+        </a>
+
+        <div class="nav-desktop">
+          <div class="nav-links">
+            <a href="#services" class="nav-link">Services</a>
+            <a href="#process" class="nav-link">Process</a>
+            <a href="#work" class="nav-link">Work</a>
+            <a href="#faq" class="nav-link">FAQ</a>
+            <a href="#contact" class="nav-link">Contact</a>
+          </div>
+          <a href="#contact" class="nav-cta">
+            Let’s talk
+            <span>↗</span>
+          </a>
+        </div>
+
+        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
+          <div class="nav-toggle-lines">
+            <span></span>
+            <span></span>
+            <span></span>
+          </div>
+        </button>
+      </div>
+
+      <div class="nav-mobile" id="navMobile">
+        <a href="#services">Services</a>
+        <a href="#process">Process</a>
+        <a href="#work">Work</a>
+        <a href="#faq">FAQ</a>
+        <a href="#contact">Contact</a>
+        <a href="#contact" class="nav-cta" style="margin-top:0.5rem; max-width: fit-content;">Book a call<span>↗</span></a>
+      </div>
+    </div>
+  </header>
+
+  <main id="top">
+    <!-- HERO -->
+    <section class="hero">
+      <div class="shell hero-grid">
+        <div>
+          <div class="hero-label">
+            <span class="hero-label-pill">AI + Automation Studio</span>
+            Faster workflows. Cleaner systems.
+          </div>
+
+          <h1 class="hero-title">
+            Build <span>AI-powered systems</span><br />that grow your business while you sleep.
+          </h1>
+
+          <p class="hero-subtitle">
+            PINE Digital Systems helps you automate operations, launch modern websites, and plug AI into your day-to-day
+            so you can focus on what actually matters: serving customers and scaling revenue.
+          </p>
+
+          <div class="hero-highlights">
+            <span>AI chatbots & assistants</span>
+            <span>Workflow automation</span>
+            <span>Websites & e-commerce</span>
+            <span>API & tool integrations</span>
+          </div>
+
+          <div class="hero-cta-row">
+            <a href="#contact" class="btn-primary">
+              Book a free 20-min strategy call
+              <span>⚡</span>
+            </a>
+            <a href="#work" class="btn-ghost">
+              View recent work
+              <span>➜</span>
+            </a>
+          </div>
+
+          <div class="hero-meta">
+            <div class="hero-meta-item">
+              <strong>Done-for-you builds</strong>
+              From idea to launch, we handle tech, automations & deployment.
+            </div>
+            <div class="hero-meta-item">
+              <strong>Based in India</strong>
+              Working with clients globally, fully remote & async-friendly.
+            </div>
+          </div>
+        </div>
+
+        <div class="hero-visual">
+          <div class="hero-orbit"></div>
+          <div class="hero-card">
+            <div class="hero-card-header">
+              <div class="hero-card-title">
+                Automation snapshot
+                <strong>Store → WhatsApp → Order Panel</strong>
+              </div>
+              <div class="hero-chip">Live for clients</div>
+            </div>
+
+            <div class="hero-metrics">
+              <div class="metric">
+                <div class="metric-label">Manual tasks removed</div>
+                <div class="metric-value">17 hrs/week<span>saved</span></div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">Response time</div>
+                <div class="metric-value">3.2s<span>avg</span></div>
+              </div>
+              <div class="metric">
+                <div class="metric-label">Cart recovery</div>
+                <div class="metric-value">+21%<span>orders</span></div>
+              </div>
+            </div>
+
+            <div class="hero-automation-row">
+              <div class="hero-automation-title">Automation flow</div>
+              <div class="automation-flow">
+                <div class="automation-step">
+                  <span>①</span> Customer messages IG / WhatsApp
+                </div>
+                <div class="automation-step">
+                  <span>②</span> AI assistant understands request
+                </div>
+                <div class="automation-step">
+                  <span>③</span> Order logged to sheet / dashboard
+                </div>
+                <div class="automation-step">
+                  <span>④</span> Invoice & tracking auto-sent
+                </div>
+              </div>
+            </div>
+
+            <div class="hero-status">
+              <div>
+                <span class="status-dot"></span>
+                Systems monitored & maintained by PINE Digital Systems.
+              </div>
+              <div>
+                <span style="color:#bbf7d0;">Next slot:</span> New builds open this month.
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- SERVICES -->
+    <section id="services">
+      <div class="shell">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Services</div>
+            <h2 class="section-title">Everything you need to ship <span>modern systems</span>.</h2>
+          </div>
+          <p class="section-subtitle">
+            Pick a single project or combine services into a custom build. Perfect for solo founders,
+            small teams and established stores.
+          </p>
+        </div>
+
+        <div class="cards-grid-3">
+          <div class="card">
+            <div class="card-header-row">
+              <span class="card-tag">01 — AI & Automation</span>
+            </div>
+            <h3>Workflows that run on autopilot</h3>
+            <p>
+              Connect your tools and let automations handle repetitive work: DMs, orders, follow-ups, reports and more.
+            </p>
+            <ul class="card-list">
+              <li>AI chatbots for WhatsApp, Instagram & web</li>
+              <li>Order capture → Google Sheets / dashboards</li>
+              <li>Automated emails, reminders & notifications</li>
+              <li>Internal tools & admin panels for your team</li>
+            </ul>
+            <div class="card-footnote">Ideal if you’re swamped with messages & manual tasks.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header-row">
+              <span class="card-tag">02 — Web & E-commerce</span>
+            </div>
+            <h3>Websites that don’t just look good — they convert</h3>
+            <p>
+              From single-page sites to full stores, built for speed, clarity and sales.
+            </p>
+            <ul class="card-list">
+              <li>High-converting landing pages</li>
+              <li>Product & service websites</li>
+              <li>Shopify / custom storefronts</li>
+              <li>Integration with payments & analytics</li>
+            </ul>
+            <div class="card-footnote">You focus on product; we handle design, dev & deployment.</div>
+          </div>
+
+          <div class="card">
+            <div class="card-header-row">
+              <span class="card-tag">03 — Systems & Strategy</span>
+            </div>
+            <h3>One-on-one systems consulting</h3>
+            <p>
+              Not sure where to start? We’ll audit your current stack and map out what to automate first.
+            </p>
+            <ul class="card-list">
+              <li>Tech + automation roadmap for your business</li>
+              <li>Pick the right tools (so you don’t overpay)</li>
+              <li>Step-by-step implementation plan</li>
+              <li>Ongoing tweaks as your business grows</li>
+            </ul>
+            <div class="card-footnote">Start small, then layer in more automation over time.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- PROCESS -->
+    <section id="process">
+      <div class="shell">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Process</div>
+            <h2 class="section-title">Clear, simple, <span>no-drama builds</span>.</h2>
+          </div>
+          <p class="section-subtitle">
+            No giant agencies, no confusing project plans. Just tight communication and fast shipping.
+          </p>
+        </div>
+
+        <div class="process-steps">
+          <div class="step">
+            <div class="step-num">Step 01</div>
+            <h3>Discovery call</h3>
+            <p>We understand your offers, current tools and bottlenecks, then define the fastest win.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 02</div>
+            <h3>System blueprint</h3>
+            <p>You get a simple diagram of what we’ll build: flows, automations, pages and integrations.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 03</div>
+            <h3>Build & testing</h3>
+            <p>We build your site / automation, test with real data and refine until it feels natural.</p>
+          </div>
+          <div class="step">
+            <div class="step-num">Step 04</div>
+            <h3>Launch & support</h3>
+            <p>We deploy, hand over a mini-guide, and stay available for tweaks and upgrades.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- WORK -->
+    <section id="work">
+      <div class="shell">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Featured work</div>
+            <h2 class="section-title">A small studio that ships <span>real projects</span>.</h2>
+          </div>
+          <p class="section-subtitle">
+            Below are a couple of recent live projects — click "View live" to open each site.
+          </p>
+        </div>
+
+        <div class="project-grid">
+          <!-- Project 1: seminariust -->
+          <div class="project-card">
+            <div class="pill-row">
+              <span class="pill">Live</span>
+              <span class="pill">Custom website</span>
+              <span class="pill">Render</span>
+            </div>
+            <h3 style="margin-top:0.1rem; margin-bottom:0.4rem;">
+              Seminariust — Custom website (live)
+            </h3>
+            <p style="font-size:0.9rem; color:var(--muted);">
+              A live project hosted on Render. Click "View live" to open the site in a new tab.
+            </p>
+
+            <div class="project-metrics">
+              <div>
+                <strong>Role</strong>
+                Development & deployment
+              </div>
+              <div>
+                <strong>Type</strong>
+                Static / interactive site
+              </div>
+              <div>
+                <strong>Hosting</strong>
+                Render
+              </div>
+            </div>
+
+            <div class="project-actions">
+              <a href="https://seminariust.onrender.com/" target="_blank" rel="noopener noreferrer">View live ↗</a>
+              <a href="https://seminariust.onrender.com/" target="_blank" rel="noopener noreferrer">Open site</a>
+            </div>
+          </div>
+
+          <!-- Project 2: customized-jewellary -->
+          <div class="project-preview">
+            <div class="fake-browser">
+              <div class="fake-browser-top">
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div style="margin-left:0.4rem; font-size:0.72rem; color:var(--muted);">customized-jewellary.onrender.com</div>
+              </div>
+              <div class="fake-browser-body">
+                <div class="fake-banner">
+                  Example project: customized-jewellary — e-commerce / product site (live)
+                </div>
+                <div style="font-size:0.78rem; color:var(--muted);">
+                  Quick links:
+                  <ul style="margin:8px 0 0 18px; padding:0; color:var(--muted);">
+                    <li>Live site (click below)</li>
+                    <li>Works well as a portfolio example for stores + order capture</li>
+                  </ul>
+                </div>
+
+                <div class="project-actions" style="margin-top:12px;">
+                  <a href="https://customized-jewellary.onrender.com/" target="_blank" rel="noopener noreferrer">View live ↗</a>
+                  <a href="https://customized-jewellary.onrender.com/" target="_blank" rel="noopener noreferrer">Open site</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- optional: smaller gallery or links -->
+        <div style="margin-top:1.2rem; font-size:0.86rem; color:var(--muted);">
+          <strong>Notes:</strong> I added simple, direct "View live" buttons for each project. If you want:
+          <ul style="margin:8px 0 0 18px;">
+            <li>thumbnails/screenshots for each project (I can add placeholders or you can provide images),</li>
+            <li>short case-study text (metrics, challenge, solution — I can draft those), or</li>
+            <li>separate detailed case-study pages linked from these cards,</li>
+          </ul>
+          tell me which and I’ll insert them directly.
+        </div>
+
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="shell">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">FAQ</div>
+            <h2 class="section-title">Answers to <span>common questions</span>.</h2>
+          </div>
+          <p class="section-subtitle">
+            Still unsure? You can always DM on Instagram or fill the form below. We’ll reply with honest
+            recommendations — even if we’re not the right fit.
+          </p>
+        </div>
+
+        <div class="faq-grid">
+          <div>
+            <p style="font-size:0.9rem; color:var(--muted); margin-top:0;">
+              Every project is different, but most client work falls into one of these categories:
+            </p>
+            <ul class="card-list">
+              <li>Launch a new website or landing page</li>
+              <li>Automate an existing manual workflow (DMs, orders, follow-ups)</li>
+              <li>Add an AI assistant to handle common customer questions</li>
+              <li>Create a simple internal dashboard for operations</li>
+            </ul>
+            <p class="small-help">
+              If your idea is more complex, we can start with a “minimum viable system” and expand over time.
+            </p>
+          </div>
+
+          <div class="faq-list">
+            <div class="faq-item">
+              <div class="faq-q">How much does a typical project cost?</div>
+              <div class="faq-a">
+                It depends on the scope. Simple landing pages or small automations cost less, full systems cost more.
+                After a quick call, you’ll get a clear fixed-price quote — no surprise fees.
+              </div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">Do you work with clients outside India?</div>
+              <div class="faq-a">
+                Yes. Everything can be handled online with Loom videos, chat and a shared dashboard. Payments can be
+                set up in INR or international options depending on the project.
+              </div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">What tools / tech do you use?</div>
+              <div class="faq-a">
+                A mix of modern web tech (HTML, CSS, JS, frameworks), AI models, automation tools, and APIs — always
+                chosen based on what fits <em>your</em> use case and budget instead of what’s “trendy”.
+              </div>
+            </div>
+            <div class="faq-item">
+              <div class="faq-q">Can you maintain and update systems after launch?</div>
+              <div class="faq-a">
+                Yes. You can choose a one-time project only, or add a light monthly plan where we monitor, update and
+                keep everything running smoothly as your business grows.
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contact">
+      <div class="shell">
+        <div class="section-header">
+          <div>
+            <div class="section-kicker">Contact</div>
+            <h2 class="section-title">Tell us about your <span>next project</span>.</h2>
+          </div>
+          <p class="section-subtitle">
+            Share a few details and we’ll get back with ideas, timelines and next steps.
+          </p>
+        </div>
+
+        <div class="contact-grid">
+          <div class="contact-card">
+            <h3 style="margin-top:0; margin-bottom:0.45rem;">One quick form, no spam.</h3>
+            <p class="contact-note">
+              You’ll hear back within 24–48 hours with a short Loom video or message breaking down how we’d approach your project.
+            </p>
+
+            <div class="contact-channels">
+              <!-- Replace with your real WhatsApp link -->
+              <a href="https://wa.me/91xxxxxxxxxx" target="_blank" rel="noopener noreferrer">WhatsApp (preferred)</a>
+              <a href="https://www.instagram.com/pinedigitalsystems/" target="_blank" rel="noopener noreferrer">@pinedigitalsystems</a>
+              <!-- Optional: add email -->
+              <!-- <a href="mailto:hello@pinedigitalsystems.com">Email</a> -->
+            </div>
+
+            <p class="small-help">
+              Best projects come from people who already care about their craft. If that’s you, we’d love to help.
+            </p>
+          </div>
+
+          <div>
+            <!-- Replace action with your form endpoint (e.g. FormSubmit, Getform, Netlify, custom backend) -->
+            <form action="#" method="post">
+              <div class="input-row">
+                <div>
+                  <label for="name">Name</label>
+                  <input id="name" name="name" placeholder="Your name" required />
+                </div>
+                <div>
+                  <label for="business">Business / brand</label>
+                  <input id="business" name="business" placeholder="Your brand / store name" />
+                </div>
+              </div>
+
+              <div class="input-row">
+                <div>
+                  <label for="email">Email</label>
+                  <input id="email" name="email" type="email" placeholder="you@example.com" required />
+                </div>
+                <div>
+                  <label for="whatsapp">WhatsApp (with country code)</label>
+                  <input id="whatsapp" name="whatsapp" placeholder="+91…" />
+                </div>
+              </div>
+
+              <div>
+                <label for="projectType">What do you need help with?</label>
+                <select id="projectType" name="projectType">
+                  <option>AI assistant / chatbot</option>
+                  <option>Automation for my current workflow</option>
+                  <option>New website / landing page</option>
+                  <option>E-commerce / online store</option>
+                  <option>Not sure yet — need guidance</option>
+                </select>
+              </div>
+
+              <div>
+                <label for="message">Describe your project in a few lines</label>
+                <textarea id="message" name="message" placeholder="Example: I run a clothing store and want to automate order capture from Instagram + get a clean website for my products." required></textarea>
+              </div>
+
+              <button type="submit" class="btn-primary" style="width:100%; justify-content:center; margin-top:0.4rem;">
+                Send details
+                <span>➤</span>
+              </button>
+              <div class="form-footnote">
+                By submitting, you agree we can contact you about this project. No newsletter, no random promos.
+              </div>
+            </form>
+          </div>
+        </div>
+
+      </div>
+    </section>
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+    <div class="shell footer-row">
+      <div>© <span id="yearSpan"></span> PINE Digital Systems. All rights reserved.</div>
+      <div class="footer-links">
+        <a href="https://www.instagram.com/pinedigitalsystems/" target="_blank" rel="noopener noreferrer">Instagram</a>
+        <a href="#services">Services</a>
+        <a href="#contact">Book a call</a>
+      </div>
+    </div>
+  </footer>
+
+</div>
+
+<script>
+  // Mobile nav toggle
+  const navToggle = document.getElementById('navToggle');
+  const navMobile = document.getElementById('navMobile');
+
+  navToggle.addEventListener('click', () => {
+    navToggle.classList.toggle('is-open');
+    navMobile.classList.toggle('is-open');
+  });
+
+  // Close mobile nav on link click
+  navMobile.querySelectorAll('a').forEach(link => {
+    link.addEventListener('click', () => {
+      navToggle.classList.remove('is-open');
+      navMobile.classList.remove('is-open');
+    });
+  });
+
+  // Smooth scroll for internal links
+  document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+    anchor.addEventListener('click', function (e) {
+      const targetId = this.getAttribute('href').slice(1);
+      const target = document.getElementById(targetId);
+      if (target) {
+        e.preventDefault();
+        window.scrollTo({
+          top: target.offsetTop - 80,
+          behavior: 'smooth'
+        });
+      }
+    });
+  });
+
+  // Dynamic year
+  document.getElementById('yearSpan').textContent = new Date().getFullYear();
+</script>
+</body>
+</html>
