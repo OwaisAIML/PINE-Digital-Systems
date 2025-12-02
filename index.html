@@ -21,6 +21,7 @@
       --radius-xl: 26px;
       --shadow-soft: 0 18px 40px rgba(0,0,0,0.45);
       --max-width: 1100px;
+      --header-height: 72px;
     }
 
     *, *::before, *::after { box-sizing: border-box; }
@@ -30,6 +31,7 @@
       background: radial-gradient(circle at top, #0b1220 0, #020617 45%, #000 100%);
       color: var(--text);
       -webkit-font-smoothing: antialiased;
+      -webkit-tap-highlight-color: transparent;
     }
     a { color: inherit; text-decoration: none; }
     img { max-width:100%; display:block; }
@@ -39,139 +41,167 @@
 
     /* HEADER */
     header {
-      position: sticky; top:0; z-index:40;
-      backdrop-filter: blur(22px);
-      background: linear-gradient(to bottom, rgba(2,6,23,0.95), rgba(2,6,23,0.7), transparent);
+      position: sticky; top:0; z-index:60;
+      height:var(--header-height);
+      display:flex; align-items:center;
+      backdrop-filter: blur(14px);
+      background: linear-gradient(to bottom, rgba(2,6,23,0.98), rgba(2,6,23,0.86));
       border-bottom: 1px solid rgba(15,23,42,0.9);
     }
-    .nav-row { display:flex; align-items:center; justify-content:space-between; padding:0.9rem 0; gap:1.5rem; }
+    .nav-row { display:flex; align-items:center; justify-content:space-between; width:100%; gap:1rem; }
     .logo-box { display:flex; align-items:center; gap:0.7rem; }
-    .logo-mark {
-      width:32px; height:32px; border-radius:999px;
-      background: radial-gradient(circle at 30% 0%, #bbf7d0, #22c55e 45%, #052e16 100%);
-      position:relative; box-shadow: 0 0 0 1px rgba(34,197,94,0.25), 0 12px 26px rgba(0,0,0,0.65);
-    }
-    .logo-mark::before { content:""; position:absolute; inset:30% 25%; border-radius:999px; border:2px solid rgba(15,23,42,0.9); border-left-color:transparent; border-bottom-color:transparent; transform:rotate(-25deg); }
-    .logo-text-main { font-weight:700; letter-spacing:0.11em; font-size:0.9rem; text-transform:uppercase; }
+    .logo-mark { width:36px; height:36px; border-radius:999px; background: radial-gradient(circle at 30% 0%, #bbf7d0, #22c55e 45%, #052e16 100%); position:relative; box-shadow: 0 0 0 1px rgba(34,197,94,0.25), 0 12px 26px rgba(0,0,0,0.65); }
+    .logo-text-main { font-weight:800; letter-spacing:0.08em; font-size:0.95rem; text-transform:uppercase; }
     .logo-text-sub { font-size:0.72rem; color:var(--muted); }
 
-    .nav-desktop { display:flex; align-items:center; gap:1.2rem; }
-    .nav-links { display:flex; align-items:center; gap:1.3rem; }
-    .nav-link { position:relative; color:var(--muted); padding-bottom:2px; }
-    .nav-link::after { content:""; position:absolute; left:0; bottom:0; height:1px; width:0; background: linear-gradient(to right,var(--accent),transparent); transition: width 0.2s ease-out; }
+    .nav-desktop { display:flex; align-items:center; gap:1rem; }
+    .nav-links { display:flex; align-items:center; gap:1.15rem; }
+    .nav-link { position:relative; color:var(--muted); padding-bottom:4px; font-weight:600; }
+    .nav-link.contact { color:var(--text); background: linear-gradient(135deg,var(--accent),var(--accent-strong)); -webkit-background-clip:text; background-clip:text; -webkit-text-fill-color:transparent; }
+    .nav-link::after { content:""; position:absolute; left:0; bottom:0; height:2px; width:0; background: linear-gradient(to right,var(--accent),transparent); transition: width 0.18s ease-out; }
     .nav-link:hover { color:var(--text); } .nav-link:hover::after { width:100%; }
 
-    .nav-cta {
-      display:inline-flex; align-items:center; gap:0.5rem; padding:0.45rem 0.9rem; border-radius:999px;
-      background: linear-gradient(135deg,var(--accent),var(--accent-strong));
-      color:#011106; font-weight:600; font-size:0.85rem; border:1px solid rgba(34,197,94,0.8);
-      box-shadow:0 14px 32px rgba(34,197,94,0.35);
-    }
+    .nav-cta { display:inline-flex; align-items:center; gap:0.5rem; padding:0.5rem 0.95rem; border-radius:999px; background: linear-gradient(135deg,var(--accent),var(--accent-strong)); color:#011106; font-weight:700; font-size:0.95rem; border:1px solid rgba(34,197,94,0.85); box-shadow:0 14px 32px rgba(34,197,94,0.28); }
 
-    .nav-toggle { display:none; width:32px; height:32px; border-radius:999px; border:1px solid rgba(55,65,81,0.9); background:rgba(15,23,42,0.9); align-items:center; justify-content:center; cursor:pointer; }
-    .nav-toggle-lines { width:16px; height:11px; position:relative; }
-    .nav-toggle-lines span { position:absolute; left:0; right:0; height:2px; border-radius:999px; background:#e5e7eb; transition: transform 0.2s ease, opacity 0.2s ease, top 0.2s ease, bottom 0.2s ease; }
-    .nav-toggle-lines span:nth-child(1){ top:0 } .nav-toggle-lines span:nth-child(2){ top:4.5px } .nav-toggle-lines span:nth-child(3){ bottom:0 }
-    .nav-toggle.is-open .nav-toggle-lines span:nth-child(1){ top:4.5px; transform:rotate(45deg); }
+    .nav-toggle { display:none; width:40px; height:40px; border-radius:10px; border:1px solid rgba(55,65,81,0.9); background:rgba(15,23,42,0.9); align-items:center; justify-content:center; cursor:pointer; }
+    .nav-toggle-lines { width:18px; height:12px; position:relative; }
+    .nav-toggle-lines span { position:absolute; left:0; right:0; height:2px; border-radius:999px; background:#e5e7eb; transition: transform 0.2s ease, opacity 0.18s ease, top 0.18s ease, bottom 0.18s ease; }
+    .nav-toggle-lines span:nth-child(1){ top:0 } .nav-toggle-lines span:nth-child(2){ top:5px } .nav-toggle-lines span:nth-child(3){ bottom:0 }
+    .nav-toggle.is-open .nav-toggle-lines span:nth-child(1){ top:5px; transform:rotate(45deg); }
     .nav-toggle.is-open .nav-toggle-lines span:nth-child(2){ opacity:0; }
-    .nav-toggle.is-open .nav-toggle-lines span:nth-child(3){ bottom:4.5px; transform:rotate(-45deg); }
+    .nav-toggle.is-open .nav-toggle-lines span:nth-child(3){ bottom:5px; transform:rotate(-45deg); }
 
-    .nav-mobile { display:none; flex-direction:column; gap:0.5rem; padding-bottom:0.8rem; }
+    .nav-mobile { display:none; flex-direction:column; gap:0.5rem; padding:0.8rem 1.25rem 1.2rem; }
+    .nav-mobile a { padding:0.6rem 0; display:block; color:var(--text); font-weight:700; }
+
+    /* Floating contact button (mobile) */
+    .floating-contact {
+      position:fixed; right:18px; bottom:18px; z-index:120; display:none; align-items:center; gap:0.6rem;
+    }
+    .floating-contact a { display:inline-flex; align-items:center; justify-content:center; padding:0.8rem 1rem; border-radius:999px; background: linear-gradient(135deg,var(--accent),var(--accent-strong)); color:#011106; font-weight:700; box-shadow:0 18px 36px rgba(0,0,0,0.45); border:1px solid rgba(34,197,94,0.9); }
 
     /* HERO */
     main { flex:1; }
-    .hero { padding:2.5rem 0 2rem; }
+    .hero { padding:3rem 0 2.2rem; }
     .hero-grid { display:grid; grid-template-columns: minmax(0,3.5fr) minmax(0,3fr); gap:2.5rem; align-items:center; }
-    .hero-label { display:inline-flex; align-items:center; gap:0.5rem; padding:0.15rem 0.4rem 0.15rem 0.2rem; border-radius:999px; background:rgba(15,23,42,0.9); border:1px solid rgba(55,65,81,0.8); margin-bottom:1rem; font-size:0.78rem; color:var(--muted); }
+    .hero-label { display:inline-flex; align-items:center; gap:0.5rem; padding:0.18rem 0.5rem; border-radius:999px; background:rgba(15,23,42,0.9); border:1px solid rgba(55,65,81,0.8); margin-bottom:1rem; font-size:0.78rem; color:var(--muted); }
     .hero-label-pill { padding:0.18rem 0.55rem; border-radius:999px; background:var(--accent-soft); color:#a7f3d0; font-size:0.7rem; letter-spacing:0.08em; text-transform:uppercase; border:1px solid rgba(34,197,94,0.6); }
-    .hero-title { font-size: clamp(2.4rem, 4vw, 3rem); line-height:1.05; letter-spacing:-0.04em; margin:0 0 0.9rem; }
+    .hero-title { font-size: clamp(2.2rem, 4vw, 3rem); line-height:1.05; letter-spacing:-0.03em; margin:0 0 0.9rem; font-weight:800; }
     .hero-title span { background: linear-gradient(to right,#bbf7d0,#22c55e); -webkit-background-clip:text; color:transparent; }
-    .hero-subtitle { font-size:0.98rem; color:var(--muted); max-width:30rem; line-height:1.6; margin-bottom:1.3rem; }
+    .hero-subtitle { font-size:0.99rem; color:var(--muted); max-width:40rem; line-height:1.6; margin-bottom:1.3rem; }
     .hero-highlights { display:flex; flex-wrap:wrap; gap:0.6rem; margin-bottom:1.8rem; }
-    .hero-highlights span { font-size:0.78rem; padding:0.25rem 0.6rem; border-radius:999px; background:rgba(15,23,42,0.95); border:1px solid rgba(31,41,55,0.9); color:var(--muted); }
+    .hero-highlights span { font-size:0.78rem; padding:0.32rem 0.7rem; border-radius:999px; background:rgba(15,23,42,0.95); border:1px solid rgba(31,41,55,0.9); color:var(--muted); }
     .hero-cta-row { display:flex; flex-wrap:wrap; gap:0.8rem; align-items:center; margin-bottom:1.4rem; }
 
-    .btn-primary, .btn-ghost { display:inline-flex; align-items:center; justify-content:center; gap:0.45rem; padding:0.65rem 1.25rem; border-radius:999px; font-size:0.9rem; font-weight:500; cursor:pointer; border:1px solid transparent; text-decoration:none; }
+    .btn-primary, .btn-ghost { display:inline-flex; align-items:center; justify-content:center; gap:0.45rem; padding:0.72rem 1.2rem; border-radius:999px; font-size:0.95rem; font-weight:700; cursor:pointer; border:1px solid transparent; text-decoration:none; }
     .btn-primary { background: radial-gradient(circle at 0% 0%, #bbf7d0, #22c55e 40%, #16a34a 100%); color:#011106; box-shadow:0 16px 38px rgba(34,197,94,0.35); border-color: rgba(34,197,94,0.9); }
     .btn-ghost { background: rgba(15,23,42,0.9); border-color: rgba(55,65,81,0.9); color:var(--muted); }
 
-    .hero-meta { display:flex; flex-wrap:wrap; gap:1.1rem; font-size:0.78rem; color:var(--muted); }
+    .hero-meta { display:flex; flex-wrap:wrap; gap:1.1rem; font-size:0.8rem; color:var(--muted); }
     .hero-meta-item strong { display:block; color:var(--text); font-size:0.95rem; margin-bottom:0.1rem; }
 
     /* HERO VISUAL */
     .hero-visual { position:relative; }
-    .hero-card { position:relative; border-radius:28px; background: radial-gradient(circle at 0% 0%, rgba(45,212,191,0.16), transparent 55%), #020617; border:1px solid rgba(31,41,55,0.9); padding:1.2rem 1.1rem; box-shadow:var(--shadow-soft); overflow:hidden; isolation:isolate; }
+    .hero-card { position:relative; border-radius:28px; background: radial-gradient(circle at 0% 0%, rgba(45,212,191,0.12), transparent 55%), #020617; border:1px solid rgba(31,41,55,0.9); padding:1.4rem 1.2rem; box-shadow:var(--shadow-soft); overflow:hidden; isolation:isolate; transform:translateY(0); transition:transform 0.36s cubic-bezier(.2,.9,.2,1), box-shadow 0.36s; }
+    .hero-card:hover{ transform:translateY(-6px); box-shadow:0 30px 60px rgba(0,0,0,0.6); }
     .hero-card-header { display:flex; align-items:center; justify-content:space-between; margin-bottom:1rem; }
-    .hero-chip { padding:0.18rem 0.6rem; border-radius:999px; border:1px solid rgba(34,197,94,0.7); background: rgba(21,128,61,0.18); font-size:0.72rem; color:#bbf7d0; }
+    .hero-chip { padding:0.18rem 0.6rem; border-radius:999px; border:1px solid rgba(34,197,94,0.7); background: rgba(21,128,61,0.12); font-size:0.72rem; color:#bbf7d0; }
+
     .hero-metrics { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:0.65rem; margin-bottom:1.1rem; }
     .metric { padding:0.5rem 0.55rem; border-radius:14px; background: rgba(15,23,42,0.96); border:1px solid rgba(31,41,55,0.9); }
-    .metric-label { font-size:0.7rem; color:var(--muted); margin-bottom:0.12rem; }
-    .metric-value { font-size:0.9rem; font-weight:600; }
-    .metric-value span { font-size:0.72rem; color:#4ade80; margin-left:0.1rem; }
+    .metric-label { font-size:0.72rem; color:var(--muted); margin-bottom:0.12rem; }
+    .metric-value { font-size:0.95rem; font-weight:700; }
 
     /* SECTION BASE */
     section { padding:2.4rem 0; }
     .section-header { display:flex; flex-wrap:wrap; align-items:baseline; justify-content:space-between; gap:0.9rem; margin-bottom:1.6rem; }
     .section-kicker { font-size:0.77rem; text-transform:uppercase; letter-spacing:0.12em; color:var(--muted); }
-    .section-title { font-size:1.4rem; margin:0.25rem 0 0; }
-    .section-title span { color:#4ade80; }
-    .section-subtitle { font-size:0.9rem; color:var(--muted); max-width:26rem; }
+    .section-title { font-size:1.5rem; margin:0.25rem 0 0; font-weight:800; }
+    .section-title span { color:var(--accent); }
+    .section-subtitle { font-size:0.95rem; color:var(--muted); max-width:34rem; }
 
     /* CARDS */
     .cards-grid-3 { display:grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap:1rem; }
-    .card { border-radius:var(--radius-lg); background:var(--bg-soft); border:1px solid var(--border); padding:1rem; box-shadow:0 10px 28px rgba(0,0,0,0.5); }
-    .card-tag { font-size:0.72rem; padding:0.15rem 0.55rem; border-radius:999px; background:rgba(15,23,42,0.9); border:1px solid rgba(31,41,55,0.9); color:var(--muted); }
+    .card { border-radius:var(--radius-lg); background:var(--bg-soft); border:1px solid var(--border); padding:1.1rem; box-shadow:0 10px 28px rgba(0,0,0,0.5); }
+    .card-header-row { display:flex; align-items:center; gap:1rem; margin-bottom:0.9rem; position:relative; }
+/* Decorative glow bar */
+.card-header-row::before {
+  content:"";
+  position:absolute;
+  left:0; bottom:-6px;
+  width:100%; height:3px;
+  background:linear-gradient(90deg, rgba(34,197,94,0.65), transparent);
+  border-radius:999px;
+  opacity:0.85;
+}
+/* Iconic number style */
+.card-number {
+  font-weight:900;
+  font-size:2.4rem;
+  line-height:1;
+  background: linear-gradient(135deg,#bbf7d0,#22c55e,#15803d);
+  -webkit-background-clip:text;
+  color:transparent;
+  text-shadow:0 4px 16px rgba(34,197,94,0.35);
+  letter-spacing:-0.03em;
+}
+.card-tag {
+  font-size:1.05rem;
+  padding:0.3rem 0.8rem;
+  border-radius:14px;
+  background:rgba(15,23,42,0.8);
+  border:1px solid rgba(34,197,94,0.25);
+  color:var(--text);
+  font-weight:800;
+  letter-spacing:0.015em;
+  box-shadow:0 6px 18px rgba(0,0,0,0.45);
+}
+@media (max-width:720px) {
+  .card-number { font-size:1.9rem; }
+  .card-tag { font-size:0.98rem; padding:0.25rem 0.7rem; }
+}
+.card-number { font-weight:900; font-size:1.6rem; color:var(--accent); background: linear-gradient(135deg, rgba(34,197,94,0.08), transparent); padding:0.18rem 0.5rem; border-radius:10px; border:1px solid rgba(34,197,94,0.14); box-shadow:0 8px 18px rgba(0,0,0,0.45); min-width:56px; text-align:center; }
+.card-tag { font-size:0.95rem; padding:0.18rem 0.6rem; border-radius:12px; background:rgba(15,23,42,0.75); border:1px solid rgba(31,41,55,0.9); color:var(--text); font-weight:700; letter-spacing:0.02em; display:inline-flex; align-items:center; }
+
+/* make number stand out on small screens too */
+@media (max-width:720px) {
+  .card-number { font-size:1.3rem; min-width:48px; }
+  .card-tag { font-size:0.9rem; }
+}
+    .card h3{ margin:0.5rem 0 0.45rem; }
 
     /* PROCESS */
-    .process-steps { display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:0.9rem; font-size:0.82rem; }
+    .process-steps { display:grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap:0.9rem; font-size:0.92rem; }
+    .step { background:rgba(15,23,42,0.9); padding:0.9rem; border-radius:14px; border:1px solid var(--border); }
+    .step-num { font-weight:700; color:var(--accent); margin-bottom:0.4rem; }
 
     /* FEATURED PROJECT */
     .project-grid { display:grid; grid-template-columns: minmax(0,3fr) minmax(0,2.5fr); gap:1rem; align-items:stretch; }
-    .project-card { border-radius:var(--radius-xl); background: radial-gradient(circle at 0% 0%, rgba(52,211,153,0.16), transparent 60%), #020617; border:1px solid var(--border); padding:1rem; box-shadow:var(--shadow-soft); }
+    .project-card { border-radius:var(--radius-xl); background: radial-gradient(circle at 0% 0%, rgba(52,211,153,0.12), transparent 60%), #020617; border:1px solid var(--border); padding:1rem; box-shadow:var(--shadow-soft); }
     .pill-row { display:flex; flex-wrap:wrap; gap:0.4rem; margin-bottom:0.7rem; }
     .pill { font-size:0.72rem; padding:0.18rem 0.55rem; border-radius:999px; border:1px solid rgba(55,65,81,0.9); background:rgba(15,23,42,0.95); color:var(--muted); }
 
-    .project-metrics { display:flex; flex-wrap:wrap; gap:1.1rem; font-size:0.78rem; margin-top:0.6rem; }
-    .project-metrics strong { display:block; font-size:0.95rem; }
-
-    .project-preview { border-radius:var(--radius-lg); border:1px solid var(--border); background: radial-gradient(circle at 0 0, rgba(148,163,184,0.15), transparent 55%), #020617; padding:0.7rem; font-size:0.8rem; color:var(--muted); }
-
-    /* Thumbnails & open button (added) */
-    .project-thumb { display:block; width:100%; border-radius:14px; overflow:hidden; margin-bottom:0.8rem; border:1px solid rgba(31,41,55,0.9); box-shadow:0 10px 28px rgba(0,0,0,0.45); }
+    .project-preview { border-radius:var(--radius-lg); border:1px solid var(--border); background: radial-gradient(circle at 0 0, rgba(148,163,184,0.12), transparent 55%), #020617; padding:0.7rem; font-size:0.8rem; color:var(--muted); }
+    .project-thumb { display:block; width:100%; border-radius:12px; overflow:hidden; margin-bottom:0.8rem; border:1px solid rgba(31,41,55,0.9); box-shadow:0 10px 28px rgba(0,0,0,0.45); }
     .project-thumb img { width:100%; height:160px; object-fit:cover; object-position:center; display:block; }
-    .project-open-btn {
-      display:inline-flex; align-items:center; gap:0.45rem; padding:0.55rem 1.1rem; border-radius:999px; font-size:0.88rem; font-weight:600;
-      background: linear-gradient(135deg, #bbf7d0, #22c55e 40%, #15803d);
-      color:#011106 !important; border:1px solid rgba(34,197,94,0.65); text-decoration:none; box-shadow:0 12px 32px rgba(34,197,94,0.35); transition:all 0.18s ease;
-    }
-    .project-open-btn:hover { transform:translateY(-2px); box-shadow:0 16px 42px rgba(34,197,94,0.45); }
-    .project-open-btn span { font-size:1rem; transform:translateY(1px); }
-
-    .project-actions { display:flex; gap:0.6rem; margin-top:0.7rem; flex-wrap:wrap; }
-
-    /* FAQ */
-    .faq-grid { display:grid; grid-template-columns: minmax(0,1.3fr) minmax(0,1.9fr); gap:1.4rem; }
-    .faq-item { border-radius:14px; border:1px solid var(--border); background:rgba(15,23,42,0.95); padding:0.7rem 0.8rem; }
-    .faq-q { font-weight:500; margin-bottom:0.25rem; }
-    .faq-a { color:var(--muted); }
 
     /* CONTACT */
     .contact-grid { display:grid; grid-template-columns: minmax(0,1.4fr) minmax(0,1.6fr); gap:1.4rem; align-items:stretch; }
-    .contact-card { border-radius:var(--radius-xl); background: radial-gradient(circle at 0% 0%, rgba(52,211,153,0.18), transparent 60%), #020617; border:1px solid var(--border); padding:1rem; box-shadow:var(--shadow-soft); }
-    .contact-channels { display:flex; flex-wrap:wrap; gap:0.55rem; font-size:0.82rem; margin-bottom:0.9rem; }
-    .contact-channels a { padding:0.35rem 0.7rem; border-radius:999px; border:1px solid rgba(55,65,81,0.9); background:rgba(15,23,42,0.95); color:var(--muted); }
+    .contact-card { border-radius:var(--radius-xl); background: radial-gradient(circle at 0% 0%, rgba(52,211,153,0.18), transparent 60%), #020617; border:1px solid var(--border); padding:1.1rem; box-shadow:var(--shadow-soft); }
+    .contact-channels { display:flex; flex-wrap:wrap; gap:0.55rem; font-size:0.88rem; margin-bottom:0.9rem; }
+    .contact-channels a { padding:0.45rem 0.75rem; border-radius:999px; border:1px solid rgba(55,65,81,0.9); background:rgba(15,23,42,0.95); color:var(--muted); font-weight:700; }
 
-    form { display:grid; gap:0.7rem; font-size:0.86rem; }
-    label { display:block; margin-bottom:0.12rem; }
-    input, textarea, select { width:100%; padding:0.55rem 0.6rem; border-radius:12px; border:1px solid rgba(55,65,81,0.9); background:rgba(15,23,42,0.95); color:var(--text); font-family:inherit; font-size:0.86rem; }
-    input:focus, textarea:focus, select:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 1px rgba(34,197,94,0.4); }
-    textarea { min-height:90px; resize:vertical; }
+    form { display:grid; gap:0.7rem; font-size:0.9rem; }
+    label { display:block; margin-bottom:0.12rem; font-weight:700; }
+    input, textarea, select { width:100%; padding:0.6rem 0.65rem; border-radius:12px; border:1px solid rgba(55,65,81,0.9); background:rgba(15,23,42,0.95); color:var(--text); font-family:inherit; font-size:0.9rem; }
+    input:focus, textarea:focus, select:focus { outline:none; border-color:var(--accent); box-shadow:0 0 0 1px rgba(34,197,94,0.35); }
+    textarea { min-height:110px; resize:vertical; }
     .input-row { display:grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap:0.7rem; }
-    .small-help { font-size:0.74rem; color:var(--muted); }
-    .form-footnote { font-size:0.75rem; color:var(--muted); margin-top:0.2rem; }
+    .small-help { font-size:0.78rem; color:var(--muted); }
+    .form-footnote { font-size:0.78rem; color:var(--muted); margin-top:0.2rem; }
 
     /* FOOTER */
-    footer { border-top:1px solid rgba(15,23,42,0.9); padding:1.1rem 0 1.3rem; font-size:0.78rem; color:var(--muted); }
+    footer { border-top:1px solid rgba(15,23,42,0.9); padding:1.1rem 0 1.3rem; font-size:0.82rem; color:var(--muted); }
     .footer-row { display:flex; flex-wrap:wrap; align-items:center; justify-content:space-between; gap:0.8rem; }
     .footer-links { display:flex; flex-wrap:wrap; gap:0.8rem; }
 
@@ -188,12 +218,20 @@
       .nav-toggle { display:flex; }
       .nav-mobile { display:none; }
       .nav-mobile.is-open { display:flex; }
-      .hero-title { font-size:2.1rem; }
+
+      .logo-text-main { font-size:0.95rem; }
+      .hero-title { font-size:2.05rem; }
+      .floating-contact { display:flex; }
+
+      /* show small contact snippet beside logo for quick tap */
+      .logo-contact { display:flex; align-items:center; gap:0.55rem; font-size:0.82rem; color:var(--muted); }
+      .logo-contact a { color:var(--text); font-weight:700; text-decoration:none; }
     }
     @media (max-width:520px) {
       .hero-meta { flex-direction:column; align-items:flex-start; }
       .input-row { grid-template-columns: minmax(0,1fr); }
       .project-thumb img { height:140px; object-position:top; }
+      .nav-toggle { width:44px; height:44px; }
     }
   </style>
 </head>
@@ -201,92 +239,104 @@
 <div class="page">
 
   <!-- HEADER -->
-  <header>
-    <div class="shell">
-      <div class="nav-row">
-        <a href="#top" class="logo-box">
-          <div class="logo-mark" aria-hidden="true"></div>
-          <div>
-            <div class="logo-text-main">PINE</div>
-            <div class="logo-text-sub">Digital Systems</div>
-          </div>
-        </a>
-
-        <div class="nav-desktop">
-          <div style="display:flex; align-items:center; gap:1.25rem;">
-            <div class="nav-links">
-              <a href="#services" class="nav-link">Services</a>
-              <a href="#process" class="nav-link">Process</a>
-              <a href="#work" class="nav-link">Work</a>
-              <a href="#faq" class="nav-link">FAQ</a>
-              <a href="#contact" class="nav-link">Contact</a>
-            </div>
-
-            <!-- ICON CONTACTS -->
-            <div style="display:flex; gap:0.6rem; align-items:center;">
-              <a href="tel:+917006641613" class="contact-icon" aria-label="Call +91 70066 41613" title="Call us" style="display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg,#0b1410,#0f2414); border:1px solid rgba(34,197,94,0.12); box-shadow:0 8px 20px rgba(2,6,23,0.6);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 6.81 19.86 19.86 0 0 1 0  -2.18 2 2 0 0 1 2 2h3a2 2 0 0 1 2 1.72c.12 1.04.37 2.05.74 3.01a2 2 0 0 1-.45 2.11L6.91 11.09a16 16 0 0 0 6.9 6.9l1.23-1.23a2 2 0 0 1 2.11-.45c.96.37 1.97.62 3.01.74A2 2 0 0 1 22 16.92z" fill="url(#g-phone)"/>
-                  <defs>
-                    <linearGradient id="g-phone" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0" stop-color="#bbf7d0"/>
-                      <stop offset="1" stop-color="#22c55e"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </a>
-
-              <a href="mailto:pinedigitalsystems@gmail.com" class="contact-icon" aria-label="Email pinedigitalsystems at gmail" title="Email us" style="display:inline-flex; align-items:center; justify-content:center; width:40px; height:40px; border-radius:12px; background:linear-gradient(135deg,#071117,#09221a); border:1px solid rgba(34,197,94,0.12); box-shadow:0 8px 20px rgba(2,6,23,0.6);">
-                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                  <path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h13A2.5 2.5 0 0 1 21 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 18.5v-13zM5 6.2l7 5 7-5" stroke="url(#g-mail)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-                  <defs>
-                    <linearGradient id="g-mail" x1="0" y1="0" x2="1" y2="1">
-                      <stop offset="0" stop-color="#bbf7d0"/>
-                      <stop offset="1" stop-color="#22c55e"/>
-                    </linearGradient>
-                  </defs>
-                </svg>
-              </a>
-            </div>
-          </div>
-
-          <a href="#contact" class="nav-cta" style="margin-left:0.8rem;">Let’s talk <span>↗</span></a>
-        </div>
-
-        <button class="nav-toggle" id="navToggle" aria-label="Toggle navigation">
-          <div class="nav-toggle-lines">
-            <span></span><span></span><span></span>
-          </div>
-        </button>
+ <header>
+  <div class="shell nav-row">
+    <!-- LOGO: replace the src with your file (e.g. images/my-logo.png or a full URL) -->
+    <a href="#top" class="logo-box" aria-label="PINE Digital Systems home">
+      <!-- Put your logo file path in the src below -->
+      <img
+        src="images/LOGO.jpg"
+        alt="PINE Digital Systems logo"
+        class="logo-img"
+        style="width:42px;height:42px;object-fit:contain;border-radius:6px;display:block;margin-right:10px;"
+      />
+      <div>
+        <div class="logo-text-main">PINE</div>
+        <div class="logo-text-sub">Digital Systems</div>
       </div>
+    </a>
 
-      <div class="nav-mobile" id="navMobile">
-        <a href="#services">Services</a>
-        <a href="#process">Process</a>
-        <a href="#work">Work</a>
-        <a href="#faq">FAQ</a>
-        <a href="#contact">Contact</a>
-
-        <div style="display:flex; gap:0.6rem; margin-top:0.6rem;">
-          <a href="tel:+917006641613" aria-label="Call +91 70066 41613" title="Call us" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:10px; border:1px solid rgba(31,41,55,0.9); background:rgba(15,23,42,0.95);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 6.81 19.86 19.86 0 0 1 0  -2.18 2 2 0 0 1 2 2h3a2 2 0 0 1 2 1.72c.12 1.04.37 2.05.74 3.01a2 2 0 0 1-.45 2.11L6.91 11.09a16 16 0 0 0 6.9 6.9l1.23-1.23a2 2 0 0 1 2.11-.45c.96.37 1.97.62 3.01.74A2 2 0 0 1 22 16.92z" fill="#9ca3af"/>
-            </svg>
-          </a>
-
-          <a href="mailto:pinedigitalsystems@gmail.com" aria-label="Email us" title="Email" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:10px; border:1px solid rgba(31,41,55,0.9); background:rgba(15,23,42,0.95);">
-            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-              <path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h13A2.5 2.5 0 0 1 21 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 18.5v-13zM5 6.2l7 5 7-5" stroke="#9ca3af" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
-            </svg>
-          </a>
-        </div>
-
-        <a href="#contact" class="nav-cta" style="margin-top:0.6rem; max-width:fit-content;">Book a call <span>↗</span></a>
-      </div>
+    <!-- Quick contact shown on mobile and hidden on desktop (controlled by CSS) -->
+    <div class="logo-contact" aria-hidden="true" style="display:none">
+      <a href="tel:+917006641613" title="Call us">+91 70066 41613</a>
     </div>
-  </header>
 
-  <main id="top">
+    <div class="nav-desktop" role="navigation" aria-label="Primary">
+      <div style="display:flex; align-items:center; gap:1rem;">
+        <nav class="nav-links">
+          <a href="#services" class="nav-link">Services</a>
+          <a href="#process" class="nav-link">Process</a>
+          <a href="#work" class="nav-link">Work</a>
+          <a href="#faq" class="nav-link">FAQ</a>
+          <a href="#contact" class="nav-link contact">Contact</a>
+        </nav>
+
+        <!-- ICON CONTACTS (desktop) -->
+        <div style="display:flex; gap:0.6rem; align-items:center;">
+          <a href="tel:+917006641613" class="contact-icon" aria-label="Call +91 70066 41613" title="Call us" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,#0b1410,#0f2414); border:1px solid rgba(34,197,94,0.12); box-shadow:0 8px 20px rgba(2,6,23,0.6);">
+            <!-- phone icon (kept simple) -->
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 6.81 19.86 19.86 0 0 1 0  -2.18 2 2 0 0 1 2 2h3a2 2 0 0 1 2 1.72c.12 1.04.37 2.05.74 3.01a2 2 0 0 1-.45 2.11L6.91 11.09a16 16 0 0 0 6.9 6.9l1.23-1.23a2 2 0 0 1 2.11-.45c.96.37 1.97.62 3.01.74A2 2 0 0 1 22 16.92z" fill="url(#g-phone)"/>
+              <defs>
+                <linearGradient id="g-phone" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#bbf7d0"/>
+                  <stop offset="1" stop-color="#22c55e"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </a>
+
+          <a href="mailto:pinedigitalsystems@gmail.com" class="contact-icon" aria-label="Email pinedigitalsystems at gmail" title="Email us" style="display:inline-flex; align-items:center; justify-content:center; width:44px; height:44px; border-radius:10px; background:linear-gradient(135deg,#071117,#09221a); border:1px solid rgba(34,197,94,0.12); box-shadow:0 8px 20px rgba(2,6,23,0.6);">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+              <path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h13A2.5 2.5 0 0 1 21 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 18.5v-13zM5 6.2l7 5 7-5" stroke="url(#g-mail)" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+              <defs>
+                <linearGradient id="g-mail" x1="0" y1="0" x2="1" y2="1">
+                  <stop offset="0" stop-color="#bbf7d0"/>
+                  <stop offset="1" stop-color="#22c55e"/>
+                </linearGradient>
+              </defs>
+            </svg>
+          </a>
+        </div>
+      </div>
+
+      <a href="#contact" class="nav-cta" style="margin-left:0.8rem;">Let’s talk <span>↗</span></a>
+    </div>
+
+    <!-- Mobile toggle -->
+    <button class="nav-toggle" id="navToggle" aria-expanded="false" aria-controls="navMobile" aria-label="Toggle navigation">
+      <div class="nav-toggle-lines">
+        <span></span><span></span><span></span>
+      </div>
+    </button>
+  </div>
+
+  <!-- Mobile menu content -->
+  <div class="nav-mobile" id="navMobile">
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#work">Work</a>
+    <a href="#faq">FAQ</a>
+    <a href="#contact">Contact</a>
+
+    <div style="display:flex; gap:0.6rem; margin-top:0.6rem;">
+      <a href="tel:+917006641613" aria-label="Call +91 70066 41613" title="Call us" style="display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:12px; border:1px solid rgba(31,41,55,0.9); background:rgba(15,23,42,0.95);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.86 19.86 0 0 1-8.63-3.07A19.5 19.5 0 0 1 3.07 6.81 19.86 19.86 0 0 1 0  -2.18 2 2 0 0 1 2 2h3a2 2 0 0 1 2 1.72c.12 1.04.37 2.05.74 3.01a2 2 0 0 1-.45 2.11L6.91 11.09a16 16 0 0 0 6.9 6.9l1.23-1.23a2 2 0 0 1 2.11-.45c.96.37 1.97.62 3.01.74A2 2 0 0 1 22 16.92z" fill="#9ca3af"/>
+        </svg>
+      </a>
+
+      <a href="mailto:pinedigitalsystems@gmail.com" aria-label="Email us" title="Email" style="display:inline-flex; align-items:center; justify-content:center; width:48px; height:48px; border-radius:12px; border:1px solid rgba(31,41,55,0.9); background:rgba(15,23,42,0.95);">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <path d="M3 5.5A2.5 2.5 0 0 1 5.5 3h13A2.5 2.5 0 0 1 21 5.5v13a2.5 2.5 0 0 1-2.5 2.5h-13A2.5 2.5 0 0 1 3 18.5v-13zM5 6.2l7 5 7-5" stroke="#9ca3af" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
+      </a>
+    </div>
+
+    <a href="#contact" class="nav-cta" style="margin-top:0.6rem; max-width:fit-content;">Book a call <span>↗</span></a>
+  </div>
+</header>
+
     <!-- HERO -->
     <section class="hero">
       <div class="shell hero-grid">
@@ -308,48 +358,47 @@
           </div>
 
           <div class="hero-cta-row">
-            <a href="#contact" class="btn-primary">Book a free 20-min call <span>⚡</span></a>
+            <a href="#contact" class="btn-primary" aria-label="Book a free call">Book a free 20‑min call <span>⚡</span></a>
             <a href="#work" class="btn-ghost">View recent work <span>➜</span></a>
           </div>
 
           <div class="hero-meta">
             <div class="hero-meta-item">
-              <strong>Done-for-you</strong>
+              <strong>Done‑for‑you</strong>
               We handle build, automation and deployment.
             </div>
             <div class="hero-meta-item">
-              <strong>Remote-friendly</strong>
+              <strong>Remote‑friendly</strong>
               Based in India, serving clients worldwide.
             </div>
           </div>
         </div>
 
         <div class="hero-visual">
-          <div class="hero-orbit" aria-hidden="true"></div>
-          <div class="hero-card">
+          <div class="hero-card" role="article" aria-label="Automation snapshot">
             <div class="hero-card-header">
               <div class="hero-card-title">Automation snapshot <strong>Store → WhatsApp → Order panel</strong></div>
               <div class="hero-chip">Live for clients</div>
             </div>
 
             <div class="hero-metrics">
-              <div class="metric"><div class="metric-label">Manual tasks removed</div><div class="metric-value">17 hrs/week<span>saved</span></div></div>
-              <div class="metric"><div class="metric-label">Response time</div><div class="metric-value">3.2s<span>avg</span></div></div>
-              <div class="metric"><div class="metric-label">Cart recovery</div><div class="metric-value">+21%<span>orders</span></div></div>
+              <div class="metric"><div class="metric-label">Manual tasks removed</div><div class="metric-value">17 hrs/week<span style="color:#4ade80; margin-left:6px; font-size:0.78rem;"> saved</span></div></div>
+              <div class="metric"><div class="metric-label">Response time</div><div class="metric-value">3.2s<span style="color:#4ade80; margin-left:6px; font-size:0.78rem;"> avg</span></div></div>
+              <div class="metric"><div class="metric-label">Cart recovery</div><div class="metric-value">+21%<span style="color:#4ade80; margin-left:6px; font-size:0.78rem;"> orders</span></div></div>
             </div>
 
-            <div class="hero-automation-row">
-              <div class="hero-automation-title">Flow</div>
-              <div class="automation-flow">
-                <div class="automation-step"><span>①</span> Customer messages</div>
-                <div class="automation-step"><span>②</span> AI understands</div>
-                <div class="automation-step"><span>③</span> Order logged</div>
-                <div class="automation-step"><span>④</span> Invoice sent</div>
+            <div>
+              <div style="font-weight:700; margin-bottom:6px;">Flow</div>
+              <div style="display:flex; gap:8px; flex-wrap:wrap; color:var(--muted);">
+                <div style="padding:0.45rem 0.65rem; border-radius:10px; background:rgba(0,0,0,0.25);">① Customer messages</div>
+                <div style="padding:0.45rem 0.65rem; border-radius:10px; background:rgba(0,0,0,0.25);">② AI understands</div>
+                <div style="padding:0.45rem 0.65rem; border-radius:10px; background:rgba(0,0,0,0.25);">③ Order logged</div>
+                <div style="padding:0.45rem 0.65rem; border-radius:10px; background:rgba(0,0,0,0.25);">④ Invoice sent</div>
               </div>
             </div>
 
-            <div class="hero-status">
-              <div><span class="status-dot"></span>Systems monitored by PINE.</div>
+            <div style="margin-top:12px; color:var(--muted); font-size:0.9rem; display:flex; justify-content:space-between; align-items:center; gap:8px;">
+              <div><span style="display:inline-block; width:9px; height:9px; background:#4ade80; border-radius:99px; margin-right:8px; vertical-align:middle;"></span>Systems monitored by PINE.</div>
               <div><span style="color:#bbf7d0;">Next slot:</span> New builds open this month.</div>
             </div>
           </div>
@@ -367,7 +416,7 @@
 
         <div class="cards-grid-3">
           <div class="card">
-            <div class="card-header-row"><span class="card-tag">01 — AI & Automation</span></div>
+            <div class="card-header-row"><div class="card-number">01</div><div class="card-tag">AI & Automation</div></div>
             <h3>Automations that free your time</h3>
             <p>Let automations handle DMs, orders, follow-ups and reports.</p>
             <ul class="card-list">
@@ -380,7 +429,7 @@
           </div>
 
           <div class="card">
-            <div class="card-header-row"><span class="card-tag">02 — Web & E-commerce</span></div>
+            <div class="card-header-row"><div class="card-number">02</div><div class="card-tag">Web & E-commerce</div></div>
             <h3>Fast sites that convert</h3>
             <p>Landing pages to full stores — built for clarity and speed.</p>
             <ul class="card-list">
@@ -393,7 +442,7 @@
           </div>
 
           <div class="card">
-            <div class="card-header-row"><span class="card-tag">03 — Systems & Strategy</span></div>
+            <div class="card-header-row"><div class="card-number">03</div><div class="card-tag">Systems & Strategy</div></div>
             <h3>Simple roadmap, clear wins</h3>
             <p>We audit your stack and recommend the best, affordable automations.</p>
             <ul class="card-list">
@@ -427,59 +476,106 @@
 
     <!-- WORK -->
     <section id="work">
-      <div class="shell">
-        <div class="section-header">
-          <div><div class="section-kicker">Featured work</div><h2 class="section-title">A small studio that ships <span>real projects</span>.</h2></div>
-          <p class="section-subtitle">Recent live projects — open each via the button below.</p>
+  <div class="shell">
+    <div class="section-header">
+      <div>
+        <div class="section-kicker">Featured work</div>
+        <h2 class="section-title">A small studio that ships <span>real projects</span>.</h2>
+      </div>
+      <p class="section-subtitle">Recent live projects — open each via the button below.</p>
+    </div>
+
+    <style>
+      /* PREMIUM OPEN SITE BUTTON */
+      <style>
+      .project-open-btn {
+        display:inline-flex;
+        align-items:center;
+        gap:0.35rem;                        /* reduced gap */
+        padding:0.40rem 0.75rem;            /* reduced padding */
+        font-size:0.75rem;                  /* reduced text */
+        font-weight:700;
+        border-radius:10px;                 /* reduced radius */
+        background:linear-gradient(135deg, #b8fbd0, #22c55e, #15803d);
+        color:#031308 !important;
+        border:1px solid rgba(34,197,94,0.55);
+        box-shadow:
+          inset 0 0 10px rgba(255,255,255,0.15),
+          0 8px 20px rgba(34,197,94,0.35);
+        transition:all 0.22s ease;
+        text-decoration:none;
+      }
+
+      .project-open-btn:hover {
+        transform:translateY(-3px) scale(1.03);
+        box-shadow:
+          inset 0 0 12px rgba(255,255,255,0.22),
+          0 14px 30px rgba(34,197,94,0.55);
+      }
+
+      .project-open-btn span {
+        font-size:0.95rem;                 /* smaller arrow icon */
+        color:#052e16;
+      }
+</style>
+
+<div class="project-grid">
+
+      <!-- Project 1 -->
+      <div class="project-card">
+        <a class="project-thumb" href="https://seminariust.onrender.com/" target="_blank" rel="noopener noreferrer">
+          <img src="images/Poster_Seminar_compressed.png" alt="Seminariust website thumbnail">
+        </a>
+
+        <div class="pill-row">
+          <span class="pill">Live</span><span class="pill">Custom website</span><span class="pill">Render</span>
         </div>
 
-        <div class="project-grid">
-          <!-- Project 1 -->
-          <div class="project-card">
-            <a class="project-thumb" href="https://seminariust.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Seminariust">
-              <img src="images/Poster_Seminar_compressed.png" alt="Seminariust website thumbnail">
-            </a>
+        <h3 style="margin-top:0.1rem; margin-bottom:0.4rem;">Seminariust — Custom website (live)</h3>
+        <p style="font-size:0.9rem; color:var(--muted);">A clean, modern interface built for speed and clarity.</p>
 
-            <div class="pill-row"><span class="pill">Live</span><span class="pill">Custom website</span><span class="pill">Render</span></div>
+        <div class="project-metrics">
+          <div><strong>Role</strong> Development & deployment</div>
+          <div><strong>Type</strong> Static / interactive site</div>
+          <div><strong>Hosting</strong> Render</div>
+        </div>
 
-            <h3 style="margin-top:0.1rem; margin-bottom:0.4rem;">Seminariust — Custom website (live)</h3>
-            <p style="font-size:0.9rem; color:var(--muted);">A clean, modern interface built for speed and clarity.</p>
-
-            <div class="project-metrics">
-              <div><strong>Role</strong> Development & deployment</div>
-              <div><strong>Type</strong> Static / interactive site</div>
-              <div><strong>Hosting</strong> Render</div>
-            </div>
-
-            <div class="project-actions">
-              <a href="https://seminariust.onrender.com/" target="_blank" rel="noopener noreferrer" class="project-open-btn">Open site <span>↗</span></a>
-            </div>
-          </div>
-
-          <!-- Project 2 -->
-          <div class="project-card">
-            <a class="project-thumb" href="https://customized-jewellary.onrender.com/" target="_blank" rel="noopener noreferrer" aria-label="Open Customized Jewellary">
-              <img src="images/Logo GPT1 TM.png" alt="Customized Jewellary store thumbnail">
-            </a>
-
-            <div class="pill-row"><span class="pill">Live</span><span class="pill">Custom website</span><span class="pill">Render</span></div>
-
-            <h3 style="margin-top:0.1rem; margin-bottom:0.4rem;">Customized Jewellary — Store (live)</h3>
-            <p style="font-size:0.9rem; color:var(--muted);">A simple product showcase with order-ready layout.</p>
-
-            <div class="project-metrics">
-              <div><strong>Role</strong> Full-stack development</div>
-              <div><strong>Type</strong> Product / store site</div>
-              <div><strong>Hosting</strong> Render</div>
-            </div>
-
-            <div class="project-actions">
-              <a href="https://customized-jewellary.onrender.com/" target="_blank" rel="noopener noreferrer" class="project-open-btn">Open site <span>↗</span></a>
-            </div>
-          </div>
+        <div class="project-actions">
+          <a href="https://seminariust.onrender.com/" target="_blank" rel="noopener noreferrer" class="project-open-btn">
+            Open site <span>↗</span>
+          </a>
         </div>
       </div>
-    </section>
+
+      <!-- Project 2 -->
+      <div class="project-card">
+        <a class="project-thumb" href="https://customized-jewellary.onrender.com/" target="_blank" rel="noopener noreferrer">
+          <img src="images/Logo GPT1 TM.png" alt="Customized Jewellary store thumbnail">
+        </a>
+
+        <div class="pill-row">
+          <span class="pill">Live</span><span class="pill">Custom website</span><span class="pill">Render</span>
+        </div>
+
+        <h3 style="margin-top:0.1rem; margin-bottom:0.4rem;">Customized Jewellary — Store (live)</h3>
+        <p style="font-size:0.9rem; color:var(--muted);">A simple product showcase with order-ready layout.</p>
+
+        <div class="project-metrics">
+          <div><strong>Role</strong> Full-stack development</div>
+          <div><strong>Type</strong> Product / store site</div>
+          <div><strong>Hosting</strong> Render</div>
+        </div>
+
+        <div class="project-actions">
+          <a href="https://customized-jewellary.onrender.com/" target="_blank" rel="noopener noreferrer" class="project-open-btn">
+            Open site <span>↗</span>
+          </a>
+        </div>
+      </div>
+
+</div>
+
+
 
     <!-- FAQ -->
     <section id="faq">
@@ -489,26 +585,136 @@
           <p class="section-subtitle">Still unsure? DM on Instagram or use the form below — we’ll give honest advice.</p>
         </div>
 
-        <div class="faq-grid">
+        <!-- Professional FAQ: search + accordion -->
+        <div style="margin-bottom:1rem; display:flex; align-items:center; gap:0.8rem;">
+          <input id="faqSearch" placeholder="Search FAQs (keywords like price, timeline, support)" style="flex:1; padding:0.7rem 0.9rem; border-radius:12px; border:1px solid var(--border); background:rgba(15,23,42,0.9); color:var(--text); font-size:0.95rem;" aria-label="Search FAQ" />
+          <button id="faqExpandAll" style="padding:0.62rem 0.9rem; border-radius:10px; background:transparent; border:1px solid rgba(34,197,94,0.18); color:var(--accent); font-weight:700;">Expand all</button>
+        </div>
+
+        <div class="faq-grid" id="faqGrid">
           <div>
-            <p style="font-size:0.9rem; color:var(--muted); margin-top:0;">Most projects fall into these buckets:</p>
+            <p style="font-size:0.95rem; color:var(--muted); margin-top:0;">Most projects fall into these buckets — we start small and validate fast:</p>
             <ul class="card-list">
               <li>New website or landing page</li>
               <li>Automate DMs, orders, follow-ups</li>
               <li>Add an AI assistant for support</li>
               <li>Build a simple operations dashboard</li>
             </ul>
-            <p class="small-help">Complex ideas start with a small, testable system.</p>
+            <p class="small-help">Complex ideas become manageable when broken into small milestones.</p>
           </div>
 
-          <div class="faq-list">
-            <div class="faq-item"><div class="faq-q">How much does a project cost?</div><div class="faq-a">It varies by scope. After a short call we provide a clear, fixed quote.</div></div>
-            <div class="faq-item"><div class="faq-q">Do you work with clients outside India?</div><div class="faq-a">Yes — everything is remote. Payments can be arranged in INR or international options.</div></div>
-            <div class="faq-item"><div class="faq-q">What tech do you use?</div><div class="faq-a">Modern web tech, AI models and common automation tools — chosen to fit your needs and budget.</div></div>
-            <div class="faq-item"><div class="faq-q">Ongoing support?</div><div class="faq-a">Yes — one-off projects or light monthly plans to maintain and update systems.</div></div>
+          <div class="faq-list" role="list" aria-label="Frequently asked questions">
+            <div class="faq-item" data-keywords="cost,price,quote">
+              <button class="faq-q" aria-expanded="false">How much does a project cost?<span class="faq-toggle">+</span></button>
+              <div class="faq-a" hidden>
+                It varies by scope. After a short discovery call we provide a clear, fixed quote and a two‑week roadmap. Typical small builds start at a modest fixed price — reach out and we’ll share a sample pricing guide.
+              </div>
+            </div>
+
+            <div class="faq-item" data-keywords="international,clients,outside">
+              <button class="faq-q" aria-expanded="false">Do you work with clients outside India?<span class="faq-toggle">+</span></button>
+              <div class="faq-a" hidden>
+                Yes — everything is remote. We handle timezones, handover documentation and payment options in INR or international methods (Stripe/PayPal/Bank transfer) depending on your preference.
+              </div>
+            </div>
+
+            <div class="faq-item" data-keywords="tech,stack,tools">
+              <button class="faq-q" aria-expanded="false">What tech do you use?<span class="faq-toggle">+</span></button>
+              <div class="faq-a" hidden>
+                We pick modern, reliable tools that solve the problem — static sites, React/Next, Shopify when needed, common automation platforms and open-source AI models where appropriate. Choice depends on cost, speed and maintenance needs.
+              </div>
+            </div>
+
+            <div class="faq-item" data-keywords="support,maintenance,ongoing">
+              <button class="faq-q" aria-expanded="false">Ongoing support?<span class="faq-toggle">+</span></button>
+              <div class="faq-a" hidden>
+                Yes — we offer one-off projects and light monthly retainers for updates, monitoring and small feature additions. Typical retainer packages start at a predictable monthly fee.
+              </div>
+            </div>
+
+            <div class="faq-item" data-keywords="timeline,delivery,time">
+              <button class="faq-q" aria-expanded="false">How long does a project take?<span class="faq-toggle">+</span></button>
+              <div class="faq-a" hidden>
+                Small landing pages or automations can ship in 1–2 weeks. More integrated stores or systems usually take 4–8 weeks depending on scope and integrations. We'll give a realistic timeline after scoping.
+              </div>
+            </div>
+
           </div>
         </div>
       </div>
+
+      <style>
+        /* FAQ specific styles */
+        .faq-list { display:flex; flex-direction:column; gap:0.6rem; }
+        .faq-item { border-radius:12px; border:1px solid rgba(31,41,55,0.9); background:rgba(10,14,18,0.6); padding:0.4rem; }
+        .faq-q { width:100%; text-align:left; font-weight:800; padding:0.9rem; background:transparent; border:none; color:var(--text); font-size:1rem; display:flex; align-items:center; justify-content:space-between; gap:12px; cursor:pointer; }
+        .faq-toggle { font-weight:900; color:var(--accent); }
+        .faq-a { padding:0.75rem 0.9rem; color:var(--muted); font-size:0.95rem; line-height:1.45; border-top:1px solid rgba(31,41,55,0.7); }
+        .faq-item[aria-hidden="true"]{ display:none; }
+        .faq-item.open { box-shadow:0 18px 36px rgba(0,0,0,0.6); border-color:rgba(34,197,94,0.18); }
+      </style>
+
+      <script>
+        (function(){
+          const grid = document.getElementById('faqGrid');
+          const items = grid ? Array.from(grid.querySelectorAll('.faq-item')) : [];
+
+          function closeAll() {
+            items.forEach(i => {
+              i.classList.remove('open');
+              const btn = i.querySelector('.faq-q');
+              const ans = i.querySelector('.faq-a');
+              if (btn) btn.setAttribute('aria-expanded','false');
+              if (ans) ans.hidden = true;
+            });
+          }
+
+          items.forEach(item => {
+            const btn = item.querySelector('.faq-q');
+            const ans = item.querySelector('.faq-a');
+            btn.addEventListener('click', () => {
+              const open = item.classList.toggle('open');
+              btn.setAttribute('aria-expanded', open ? 'true' : 'false');
+              if (ans) ans.hidden = !open;
+            });
+
+            // keyboard accessibility: Enter/Space to toggle
+            btn.addEventListener('keydown', (e) => {
+              if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); btn.click(); }
+            });
+          });
+
+          // Search filter
+          const search = document.getElementById('faqSearch');
+          if (search) {
+            search.addEventListener('input', (e)=>{
+              const q = e.target.value.trim().toLowerCase();
+              items.forEach(it => {
+                const keys = (it.getAttribute('data-keywords')||'');
+                const text = (it.textContent||'').toLowerCase();
+                const match = q === '' || text.includes(q) || keys.includes(q);
+                it.style.display = match ? 'block' : 'none';
+              });
+            });
+          }
+
+          // Expand all / Collapse all
+          const expandBtn = document.getElementById('faqExpandAll');
+          if (expandBtn) {
+            let expanded = false;
+            expandBtn.addEventListener('click', ()=>{
+              expanded = !expanded;
+              if (expanded) {
+                items.forEach(i=>{ i.classList.add('open'); i.querySelector('.faq-q').setAttribute('aria-expanded','true'); i.querySelector('.faq-a').hidden=false; });
+                expandBtn.textContent = 'Collapse all';
+              } else {
+                closeAll();
+                expandBtn.textContent = 'Expand all';
+              }
+            });
+          }
+        })();
+      </script>
     </section>
 
     <!-- CONTACT -->
@@ -527,6 +733,8 @@
             <div class="contact-channels">
               <a href="https://wa.me/917006641613" target="_blank" rel="noopener noreferrer">WhatsApp (preferred)</a>
               <a href="https://www.instagram.com/pinedigitalsystems/" target="_blank" rel="noopener noreferrer">@pinedigitalsystems</a>
+              <a href="tel:+917006641613">Call</a>
+              <a href="mailto:pinedigitalsystems@gmail.com">Email</a>
             </div>
 
             <p class="small-help">Great projects start with care. If that’s you, let’s talk.</p>
@@ -568,7 +776,7 @@
                 <textarea id="message" name="message" placeholder="E.g. I run a clothing store and want order capture + a clean website." required></textarea>
               </div>
 
-              <button type="submit" class="btn-primary" style="width:100%; justify-content:center; margin-top:0.4rem;">
+              <button type="submit" class="btn-primary" style="width:100%; justify-content:center; margin-top:0.4rem;" aria-label="Send project details">
                 Send details <span>➤</span>
               </button>
 
@@ -591,17 +799,24 @@
       </div>
     </div>
   </footer>
+
+  <!-- Floating contact (mobile) -->
+  <div class="floating-contact" id="floatContact" aria-hidden="true">
+    <a href="https://wa.me/917006641613" target="_blank" rel="noopener noreferrer" aria-label="WhatsApp">WhatsApp</a>
+  </div>
 </div>
 
 <script>
   // Mobile nav toggle
   const navToggle = document.getElementById('navToggle');
   const navMobile = document.getElementById('navMobile');
+  const floatContact = document.getElementById('floatContact');
 
   if (navToggle && navMobile) {
     navToggle.addEventListener('click', () => {
-      navToggle.classList.toggle('is-open');
+      const open = navToggle.classList.toggle('is-open');
       navMobile.classList.toggle('is-open');
+      navToggle.setAttribute('aria-expanded', open ? 'true' : 'false');
     });
 
     // Close mobile nav on link click
@@ -609,27 +824,43 @@
       link.addEventListener('click', () => {
         navToggle.classList.remove('is-open');
         navMobile.classList.remove('is-open');
+        navToggle.setAttribute('aria-expanded', 'false');
       });
     });
   }
 
-  // Smooth scroll for internal links
+  // Smooth scroll for internal links (keeps header offset)
   document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
-      const targetId = this.getAttribute('href').slice(1);
+      const href = this.getAttribute('href');
+      if (!href || href === '#') return;
+      const targetId = href.slice(1);
       const target = document.getElementById(targetId);
       if (target) {
         e.preventDefault();
-        window.scrollTo({
-          top: target.offsetTop - 80,
-          behavior: 'smooth'
-        });
+        const headerOffset = 84; // larger offset for sticky header
+        const elementPosition = target.getBoundingClientRect().top + window.pageYOffset;
+        window.scrollTo({ top: elementPosition - headerOffset, behavior: 'smooth' });
       }
     });
   });
 
   // Dynamic year
   document.getElementById('yearSpan').textContent = new Date().getFullYear();
+
+  // Show floating contact only on small screens
+  function handleResize() {
+    if (window.innerWidth <= 720) {
+      if (floatContact) floatContact.style.display = 'flex';
+      // show small logo contact
+      document.querySelectorAll('.logo-contact').forEach(el=>el.style.display='flex');
+    } else {
+      if (floatContact) floatContact.style.display = 'none';
+      document.querySelectorAll('.logo-contact').forEach(el=>el.style.display='none');
+    }
+  }
+  handleResize();
+  window.addEventListener('resize', handleResize);
 
   // Form -> mailto
   function sendMail(e) {
