@@ -865,15 +865,14 @@
     </div>
   </section>
 
+  <!-- CONTACT FORM JS – now points to Render backend -->
   <script>
     (function () {
       const form = document.getElementById("contact-form");
       const statusEl = document.getElementById("contact-status");
       if (!form || !statusEl) return;
 
-      // 🔴 Make sure this matches your ngrok HTTPS URL
-      const API_BASE = "https://honey-equable-evelynn.ngrok-free.dev";
-      const ENDPOINT = "https://honey-equable-evelynn.ngrok-free.dev/webhook/website";
+      const ENDPOINT = "https://pine-ai-assist.onrender.com/api/contact";
 
       form.addEventListener("submit", async (e) => {
         e.preventDefault();
@@ -903,8 +902,9 @@ Project details: ${details}
               "Content-Type": "application/json",
             },
             body: JSON.stringify({
+              name,
+              contact: email,          // email used as contact
               message: combinedMessage,
-              from: email,
               source: "website",
             }),
           });
@@ -919,8 +919,12 @@ Project details: ${details}
             }
           }
 
-          if (res.ok && (!data || data.success !== false)) {
+          if (res.ok) {
             statusEl.textContent = "✅ Sent! We'll contact you soon.";
+            // Optional: show AI reply if you want
+            if (data && data.reply) {
+              console.log("AI reply:", data.reply);
+            }
             form.reset();
           } else {
             console.error("Bad response:", res.status, data);
@@ -1010,68 +1014,6 @@ Project details: ${details}
   }
   handleResize();
   window.addEventListener('resize', handleResize);
-</script>
-
-<script>
-  const form = document.getElementById("contact-form");
-  const statusEl = document.getElementById("contact-status");
-
-  if (form) {
-    form.addEventListener("submit", async (e) => {
-      e.preventDefault();
-      statusEl.textContent = "Sending...";
-      const button = form.querySelector("button");
-      button.disabled = true;
-
-      const name = form.name.value.trim();
-      const email = form.email.value.trim();
-      const budget = form.budget.value.trim();
-      const details = form.message.value.trim();
-
-      const combinedMessage = `
-Name: ${name}
-Email: ${email}
-Budget: ${budget || "Not specified"}
-Project details: ${details}
-      `.trim();
-
-      try {
-        const res = await fetch("https://honey-equable-evelynn.ngrok-free.dev/webhook/website", {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({
-            message: combinedMessage,
-            from: email,
-            source: "website",
-          }),
-        });
-
-        let data = null;
-        const contentType = res.headers.get("content-type") || "";
-        if (contentType.includes("application/json")) {
-          try {
-            data = await res.json();
-          } catch (err) {
-            console.error("JSON parse error:", err);
-          }
-        }
-
-        if (res.ok && (!data || data.success !== false)) {
-          statusEl.textContent = "✅ Sent! We'll contact you soon.";
-          form.reset();
-        } else {
-          statusEl.textContent = "❌ Something went wrong. Please try again.";
-        }
-      } catch (err) {
-        console.error(err);
-        statusEl.textContent = "❌ Server error. Please try again later.";
-      } finally {
-        button.disabled = false;
-      }
-    });
-  }
 </script>
 
 </body>
